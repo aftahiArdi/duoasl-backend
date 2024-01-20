@@ -11,6 +11,7 @@ CORS(app)
 UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
+app.config['CORS_HEADERS'] = 'video/mp4'
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
