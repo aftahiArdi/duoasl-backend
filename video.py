@@ -1,9 +1,11 @@
 from flask import Flask, request, send_from_directory
+from flask_cors import CORS  # Import CORS
 import zipfile
 import os
 import shutil
 
 app = Flask(__name__)
+CORS(app)
 
 # Directory where uploaded files will be stored
 UPLOAD_FOLDER = 'uploads'
