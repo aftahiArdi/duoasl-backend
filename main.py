@@ -9,6 +9,9 @@ app = Flask(__name__)
 
 @app.route('/run_notebook')
 def run_notebook():
+    
+    
+    
     # Load the notebook
     with open('test.ipynb') as f:
         nb = nbformat.read(f, as_version=4)
@@ -26,6 +29,7 @@ def run_notebook():
                     output_data.append(output.text)
                 elif output.output_type == 'execute_result':
                     output_data.append(output.data.get('text/plain', ''))
+                    
 
     # Join all outputs into a single string
     full_output = "\n".join(output_data)
