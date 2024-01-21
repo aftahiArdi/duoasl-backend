@@ -44,17 +44,17 @@ def upload_file(id):
         "3":"I love you",
     }
 
-    with open('ml_model/use_model.ipynb') as f:
-        nb = nbformat.read(f, nbformat.NO_CONVERT)
+    with open('ml_model/application.ipynb') as f:
+        nb = nbformat.read(f, as_version=4)
 
     #print("nb!!!!!!", nb)
     # # Run the notebook
     ep = ExecutePreprocessor(timeout=600000)
     #print(ep)
-    try:
-        ep.preprocess(nb, {'metadata': {'path': 'ml_model/'}})
-    except Exception as e:
-        print("hello", e)
+    # try:
+    ep.preprocess(nb, {'metadata': {'path': 'ml_model/'}})
+    # except Exception as e:
+    #     print("Error", e)
 
     # # Extract outputs from each code cell
     output_data = []
@@ -66,12 +66,12 @@ def upload_file(id):
                 elif output.output_type == 'execute_result':
                     output_data.append(output.data.get('text/plain', ''))
 
-    #print(output_data)
+    print(output_data)
                     
     # # Join all outputs into a single string
 
-    #array = np.load("ml_model/outputs/test.npy")
-    #print(array)
+    array = np.load("ml_model/outputs/test.npy")
+    print(array)
 
     
     

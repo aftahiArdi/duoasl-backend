@@ -114,6 +114,8 @@ model.add(Dense(32, activation='relu'))
 model.add(Dense(actions.shape[0], activation='softmax'))
 
 
+model.load_weights('gen3.h5')
+
 model.summary()
 
 actions[np.argmax(y_test[3])]
