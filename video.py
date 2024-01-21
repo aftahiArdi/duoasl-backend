@@ -18,11 +18,13 @@ def upload_file():
         return 'No file part', 400
 
     file = request.files['file']
+    
+    print(file.filename)
 
     if file.filename == '':
         return 'No selected file', 400
 
-    if file and file.filename.endswith('.zip'):
+    if file:
         filepath = os.path.join(UPLOAD_FOLDER, file.filename)
         file.save(filepath)
             
