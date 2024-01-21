@@ -21,7 +21,7 @@ def upload_file():
         return 'No data received', 400
     
     current_time = datetime.now().strftime("%Y%m%d%H%M%S")
-    filename = f'uploaded_video_{current_time}.mp4'
+    filename = f'video.mp4'
 
     # Generate a filename or define your own logic here
 
