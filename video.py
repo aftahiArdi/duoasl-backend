@@ -35,14 +35,6 @@ def upload_file(id):
     filepath = os.path.join(UPLOAD_FOLDER, filename)
     with open(filepath, 'wb') as file:
         file.write(data)
-        
-
-        
-    asl_translation = {
-        "1": "hello",
-        "2":"thanks",
-        "3":"I love you",
-    }
 
     with open('ml_model/application.ipynb') as f:
         nb = nbformat.read(f, as_version=4)
