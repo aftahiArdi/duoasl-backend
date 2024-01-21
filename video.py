@@ -66,16 +66,29 @@ def upload_file(id):
                 elif output.output_type == 'execute_result':
                     output_data.append(output.data.get('text/plain', ''))
 
-    print(output_data)
+    # print(output_data)
                     
     # # Join all outputs into a single string
 
-    array = np.load("ml_model/outputs/test.npy")
+    array = np.load("ml_model/outputs/test.npy").tolist()
     print(array)
 
+    count_hello = array.count("hello")
+    count_thanks = array.count("thanks")
+    count_iloveyou = array.count("iloveyou")
+
+    max_count = max(count_hello, count_thanks, count_iloveyou)
+
+    print(count_hello, count_thanks, count_iloveyou)
+
+    if max_count == count_hello and id == "1":
+        return {"success": True},200
+    elif max_count == count_thanks and id == "2":
+        return {"success": True},200
+    elif max_count == count_iloveyou and id == "3":
+        return {"success": True},200
     
-    
-    return 'File uploaded', 200
+    return {"success": False},200
 
 @app.route('/download/<filename>', methods=['GET'])
 def download_file(filename):
