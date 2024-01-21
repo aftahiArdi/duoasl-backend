@@ -13,7 +13,12 @@ app = Flask(__name__)
 @app.route('/run_notebook')
 def run_notebook():
     
-    
+    asl_translation = {
+        "1": "hello",
+        "2":"thanks",
+        "3":"iloveyou",
+    }
+
     
     # Load the notebook
     with open('ml_model/use_model.ipynb') as f:
@@ -23,15 +28,15 @@ def run_notebook():
     ep = ExecutePreprocessor(timeout=600, kernel_name='python3')
     ep.preprocess(nb)
 
-    # # Extract outputs from each code cell
-    # output_data = []
-    # for cell in nb.cells:
-    #     if cell.cell_type == 'code':
-    #         for output in cell.outputs:
-    #             if output.output_type == 'stream':
-    #                 output_data.append(output.text)
-    #             elif output.output_type == 'execute_result':
-    #                 output_data.append(output.data.get('text/plain', ''))
+    # Extract outputs from each code cell
+    output_data = []
+    for cell in nb.cells:
+        if cell.cell_type == 'code':
+            for output in cell.outputs:
+                if output.output_type == 'stream':
+                    output_data.append(output.text)
+                elif output.output_type == 'execute_result':
+                    output_data.append(output.data.get('text/plain', ''))
                     
 
     # Join all outputs into a single string
