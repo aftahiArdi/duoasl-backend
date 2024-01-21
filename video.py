@@ -25,24 +25,16 @@ def upload_file():
     if file and file.filename.endswith('.zip'):
         filepath = os.path.join(UPLOAD_FOLDER, file.filename)
         file.save(filepath)
-
-        # Unzipping the file directly into the UPLOAD_FOLDER
-        with zipfile.ZipFile(filepath, 'r') as zip_ref:
-            zip_ref.extractall(UPLOAD_FOLDER)
             
         # for item in os.listdir(UPLOAD_FOLDER):
-        #     if not item.endswith('.mp4'):
-        #         os.remove(os.path.join(UPLOAD_FOLDER, item))
-        
-        for item in os.listdir(UPLOAD_FOLDER):
-            item_path = os.path.join(UPLOAD_FOLDER, item)
-            if os.path.isdir(item_path):
-                shutil.rmtree(item_path)  # Remove directory and all its contents
-            elif not item.endswith('.mp4'):
-                os.remove(item_path)  # Remove the file if it's not .mp4
+        #     item_path = os.path.join(UPLOAD_FOLDER, item)
+        #     if os.path.isdir(item_path):
+        #         shutil.rmtree(item_path)  # Remove directory and all its contents
+        #     elif not item.endswith('.mp4'):
+        #         os.remove(item_path)  # Remove the file if it's not .mp4
 
 
-        return 'File uploaded and unzipped successfully', 200
+        return 'File uploaded', 200
     else:
         return 'Invalid file format', 400
 
