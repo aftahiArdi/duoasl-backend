@@ -2,9 +2,13 @@ from flask import Flask, request, send_from_directory
 from flask_cors import CORS
 import os
 from datetime import datetime
+import numpy as np
+
+
+
 
 import nbformat
-from nbconvert.preprocessors import ExecutePreprocessor
+from nbconvert.preprocessors import ExecutePreprocessor, CellExecutionError
 
 
 app = Flask(__name__)
@@ -40,28 +44,35 @@ def upload_file(id):
         "3":"I love you",
     }
 
-    
-    # Load the notebook
-    with open('test.ipynb') as f:
-        nb = nbformat.read(f, as_version=4)
+    with open('ml_model/use_model.ipynb') as f:
+        nb = nbformat.read(f, nbformat.NO_CONVERT)
 
-    # Run the notebook
-    ep = ExecutePreprocessor(timeout=600, kernel_name='python3')
-    ep.preprocess(nb)
+    #print("nb!!!!!!", nb)
+    # # Run the notebook
+    ep = ExecutePreprocessor(timeout=600000)
+    #print(ep)
+    try:
+        ep.preprocess(nb, {'metadata': {'path': 'ml_model/'}})
+    except Exception as e:
+        print("hello", e)
 
-    # Extract outputs from each code cell
+    # # Extract outputs from each code cell
     output_data = []
-    # for cell in nb.cells:
-    #     if cell.cell_type == 'code':
-    #         for output in cell.outputs:
-    #             if output.output_type == 'stream':
-    #                 output_data.append(output.text)
-    #             elif output.output_type == 'execute_result':
-    #                 output_data.append(output.data.get('text/plain', ''))
-    output_data.append(nb.cells[2].outputs[0].text)                    
+    for cell in nb.cells:
+        if cell.cell_type == 'code':
+            for output in cell.outputs:
+                if output.output_type == 'stream':
+                    output_data.append(output.text)
+                elif output.output_type == 'execute_result':
+                    output_data.append(output.data.get('text/plain', ''))
 
-    # Join all outputs into a single string
-    full_output = "\n".join(output_data)
+    #print(output_data)
+                    
+    # # Join all outputs into a single string
+
+    #array = np.load("ml_model/outputs/test.npy")
+    #print(array)
+
     
     
     return 'File uploaded', 200
